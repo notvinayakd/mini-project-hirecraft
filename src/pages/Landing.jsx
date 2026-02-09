@@ -48,7 +48,7 @@ const HeroSection = () => {
                     transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                     className="text-7xl md:text-9xl font-bold font-heading tracking-tighter leading-[0.9] mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/40"
                 >
-                    DEFY <br /> THE <br /> DEFAULT
+                    Skill issue? <br /> we got <br /> you
                 </motion.h1>
 
                 <motion.p
@@ -57,13 +57,13 @@ const HeroSection = () => {
                     transition={{ duration: 1, delay: 0.5 }}
                     className="text-xl md:text-2xl text-secondary max-w-xl mx-auto mb-10 font-light"
                 >
-                    Not just another framework. A manifesto for the bold.
+                    Building you from root to apex
                 </motion.p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                     <Link to="/signup">
                         <Button variant="primary" className="h-14 px-10 text-lg shadow-[0_0_40px_-10px_rgba(124,124,255,0.4)]">
-                            Start Creating
+                            Start learning
                         </Button>
                     </Link>
                 </div>
@@ -87,9 +87,8 @@ const ManifestoSection = () => {
     return (
         <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
             <div className="space-y-24">
-                <ManifestoLine text="We believe in the power of silence." align="left" />
-                <ManifestoLine text=" Complexity is the enemy of execution. " align="center" />
-                <ManifestoLine text="Design is not decoration. It is intent." align="right" />
+                <ManifestoLine text="We believe in the power in you" align="left" />
+                <ManifestoLine text="Code your future with conviction." align="right" />
             </div>
         </section>
     );
