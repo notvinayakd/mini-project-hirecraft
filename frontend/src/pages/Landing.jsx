@@ -18,7 +18,7 @@ const Landing = () => {
         <div ref={containerRef} className="relative bg-background w-full">
             <HeroSection />
             <ManifestoSection />
-            <HorizontalScrollSection />
+            {/* <HorizontalScrollSection /> */}
             <CallToActionSection />
         </div>
     );
@@ -169,9 +169,9 @@ const CallToActionSection = () => {
                 <h2 className="text-5xl md:text-8xl font-bold font-heading mb-10 tracking-tighter">
                     Ready to <span className="text-accent">Ascend?</span>
                 </h2>
-                <Link to="/signup">
+                <Link to="/statistics">
                     <Button variant="primary" className="h-16 px-12 text-xl rounded-full">
-                        Join the Beta
+                        View Our Statistics
                     </Button>
                 </Link>
             </div>

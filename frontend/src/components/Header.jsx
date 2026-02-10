@@ -9,11 +9,6 @@ const Header = () => {
                 hire<span className="text-accent">craft.</span>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-8">
-                <a href="#features" className="text-sm text-secondary hover:text-white transition-colors">features</a>
-                <a href="#about" className="text-sm text-secondary hover:text-white transition-colors">about</a>
-            </nav>
-
             <div className="flex items-center gap-4">
                 <Link to="/login" className="text-sm font-medium text-white hover:text-accent transition-colors">
                     Login
