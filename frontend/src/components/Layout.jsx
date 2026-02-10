@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom';
 const Layout = ({ children }) => {
     const location = useLocation();
     const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
+    const isDashboard = location.pathname === '/dashboard';
+    const shouldHideNav = isAuthPage || isDashboard;
 
     return (
         <div className="min-h-screen flex flex-col relative bg-background overflow-x-hidden selection:bg-accent/20">
@@ -15,13 +17,13 @@ const Layout = ({ children }) => {
                 <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent/5 rounded-full blur-[120px] mix-blend-screen" />
             </div>
 
-            {!isAuthPage && <Header />}
+            {!shouldHideNav && <Header />}
 
             <main className="flex-grow z-10 flex flex-col">
                 {children}
             </main>
 
-            {!isAuthPage && <Footer />}
+            {!shouldHideNav && <Footer />}
         </div>
     );
 };

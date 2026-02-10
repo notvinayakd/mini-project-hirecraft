@@ -6,7 +6,7 @@ const Header = () => {
     return (
         <header className="fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-12 flex justify-between items-center backdrop-blur-sm bg-background/50 border-b border-white/5">
             <Link to="/" className="text-xl font-heading font-bold tracking-tighter text-white z-50">
-                brand.
+                hire<span className="text-accent">craft.</span>
             </Link>
 
             <nav className="hidden md:flex items-center gap-8">
