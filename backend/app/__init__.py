@@ -19,7 +19,8 @@ def create_app():
 
     db.init_app(app)
 
-    from app.routes import auth_routes
+    from app.routes import auth_routes, dashboard_routes
     app.register_blueprint(auth_routes.bp)
+    app.register_blueprint(dashboard_routes.bp)
 
     return app

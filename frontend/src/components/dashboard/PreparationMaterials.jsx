@@ -1,13 +1,19 @@
 import React from 'react';
 import { Book, Code2, Terminal, UserCheck, ArrowRight } from 'lucide-react';
 
-const PreparationMaterials = () => {
-    const materials = [
-        { title: "Aptitude", count: "140+ Questions", icon: Book, color: "text-blue-400" },
-        { title: "Technical", count: "25 Topics", icon: Terminal, color: "text-emerald-400" },
-        { title: "Coding", count: "50 Problems", icon: Code2, color: "text-purple-400" },
-        { title: "Interview", count: "10 Mock Sets", icon: UserCheck, color: "text-orange-400" },
-    ];
+const PreparationMaterials = ({ materialCounts = [] }) => {
+    // Map subjects to icons (simple logic for now)
+    const getIcon = (title) => {
+        if (title.includes('Code') || title.includes('Coding')) return Code2;
+        if (title.includes('Technical') || title.includes('DSA')) return Terminal;
+        if (title.includes('Interview')) return UserCheck;
+        return Book;
+    };
+
+    const getColor = (idx) => {
+        const colors = ["text-blue-400", "text-emerald-400", "text-purple-400", "text-orange-400"];
+        return colors[idx % colors.length];
+    };
 
     return (
         <section className="bg-glass p-6 rounded-2xl border border-white/5">
@@ -19,20 +25,29 @@ const PreparationMaterials = () => {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {materials.map((item, idx) => (
-                    <div
-                        key={idx}
-                        className="p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all cursor-pointer group flex flex-col items-center text-center gap-3"
-                    >
-                        <div className={`p-3 rounded-full bg-white/5 ${item.color} group-hover:scale-110 transition-transform duration-300`}>
-                            <item.icon className="w-6 h-6" />
-                        </div>
-                        <div>
-                            <h4 className="text-white font-medium text-sm">{item.title}</h4>
-                            <p className="text-xs text-secondary mt-1">{item.count}</p>
-                        </div>
+                {materialCounts.length > 0 ? (
+                    materialCounts.map((item, idx) => {
+                        const Icon = getIcon(item.title);
+                        return (
+                            <div
+                                key={idx}
+                                className="p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all cursor-pointer group flex flex-col items-center text-center gap-3"
+                            >
+                                <div className={`p-3 rounded-full bg-white/5 ${getColor(idx)} group-hover:scale-110 transition-transform duration-300`}>
+                                    <Icon className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <h4 className="text-white font-medium text-sm">{item.title}</h4>
+                                    <p className="text-xs text-secondary mt-1">{item.count}</p>
+                                </div>
+                            </div>
+                        );
+                    })
+                ) : (
+                    <div className="col-span-4 text-center py-4">
+                        <p className="text-secondary text-sm">No materials available.</p>
                     </div>
-                ))}
+                )}
             </div>
         </section>
     );

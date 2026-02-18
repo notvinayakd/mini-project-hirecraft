@@ -1,13 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { 
-    LayoutDashboard, 
-    FileText, 
-    Briefcase, 
-    BookOpen, 
-    Building2, 
-    User, 
-    LogOut 
+import {
+    LayoutDashboard,
+    FileText,
+    Briefcase,
+    BookOpen,
+    Building2,
+    User,
+    LogOut
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -17,7 +17,6 @@ const Sidebar = () => {
         { icon: FileText, label: 'Mock Tests', path: '/mock-tests' },
         { icon: Briefcase, label: 'Placement Drives', path: '/drives' },
         { icon: BookOpen, label: 'Prep Materials', path: '/materials' },
-        { icon: Building2, label: 'Interested Companies', path: '/companies' },
         { icon: User, label: 'Profile', path: '/profile' },
     ];
 
@@ -35,10 +34,9 @@ const Sidebar = () => {
                         key={item.path}
                         to={item.path}
                         className={({ isActive }) =>
-                            `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group ${
-                                isActive 
-                                    ? 'bg-accent/10 text-accent border border-accent/20' 
-                                    : 'text-secondary hover:text-white hover:bg-white/5'
+                            `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group ${isActive
+                                ? 'bg-accent/10 text-accent border border-accent/20'
+                                : 'text-secondary hover:text-white hover:bg-white/5'
                             }`
                         }
                     >

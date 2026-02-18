@@ -6,8 +6,8 @@ import { useLocation } from 'react-router-dom';
 const Layout = ({ children }) => {
     const location = useLocation();
     const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
-    const isDashboard = location.pathname === '/dashboard';
-    const shouldHideNav = isAuthPage || isDashboard;
+    const dashboardRoutes = ['/dashboard', '/drives', '/mock-tests', '/materials', '/profile'];
+    const shouldHideNav = isAuthPage || dashboardRoutes.includes(location.pathname);
 
     return (
         <div className="min-h-screen flex flex-col relative bg-background overflow-x-hidden selection:bg-accent/20">
