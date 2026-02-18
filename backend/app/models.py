@@ -99,6 +99,7 @@ class Material(db.Model):
     subject = db.Column(db.String(50)) # Aptitude, Technical...
     url = db.Column(db.String(255))
     meta_info = db.Column(db.String(50)) # e.g., "140+ Questions", "25 Topics"
+    company = db.Column(db.String(50)) # e.g., "TCS", "Infosys", "Google"
     
     def to_dict(self):
         return {
@@ -106,5 +107,6 @@ class Material(db.Model):
             'title': self.title,
             'type': self.type,
             'subject': self.subject,
-            'meta': self.meta_info
+            'meta': self.meta_info,
+            'company': self.company
         }

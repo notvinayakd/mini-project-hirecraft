@@ -92,22 +92,23 @@ def seed_data():
             status="In Progress"
         ))
 
-        # 5. Create Prep Materials
-        materials = [
-            {"title": "Complete Java Guide", "type": "PDF", "sub": "Technical", "meta": "15MB"},
-            {"title": "Top 50 HR Interview Questions", "type": "Article", "sub": "HR", "meta": "10 min read"},
-            {"title": "DSA Patterns Explained", "type": "Video", "sub": "Coding", "meta": "45 mins"},
-            {"title": "System Design Basics", "type": "PDF", "sub": "Technical", "meta": "5MB"},
-            {"title": "Logical Reasoning Tricks", "type": "Video", "sub": "Aptitude", "meta": "30 mins"},
+        material_data = [
+            {"title": "TCS NQT Past Papers", "type": "PDF", "sub": "Technical", "meta": "15MB", "company": "TCS", "url": "/tcs_questions.pdf"},
+            {"title": "Infosys Power Programmer Guide", "type": "PDF", "sub": "Coding", "meta": "10 min read", "company": "Infosys", "url": "#"},
+            {"title": "IBM Cognitive Ability Test", "type": "Video", "sub": "Aptitude", "meta": "45 mins", "company": "IBM", "url": "#"},
+            {"title": "Google System Design", "type": "Video", "sub": "Technical", "meta": "5MB", "company": "Google", "url": "#"},
+            {"title": "Amazon Leadership Principles", "type": "Article", "sub": "HR", "meta": "30 mins", "company": "Amazon", "url": "#"},
+            {"title": "TCS Digital Coding Questions", "type": "PDF", "sub": "Coding", "meta": "12MB", "company": "TCS", "url": "#"},
         ]
 
-        for m in materials:
+        for m in material_data:
             db.session.add(Material(
                 title=m["title"],
                 type=m["type"],
                 subject=m["sub"],
                 meta_info=m["meta"],
-                url="#"
+                company=m.get("company"),
+                url=m.get("url", "#")
             ))
 
         db.session.commit()

@@ -7,93 +7,79 @@ const PrepMaterials = () => {
     const [selectedType, setSelectedType] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
 
-    const types = ['All', 'PDF', 'Video', 'Article'];
+    const types = ['All', 'TCS', 'Infosys', 'IBM', 'Google', 'Amazon'];
 
     const materials = [
         {
             id: 1,
-            title: "Data Structures & Algorithms Cheat Sheet",
+            title: "TCS NQT Past Papers",
             type: "PDF",
-            subject: "DSA",
-            size: "2.4 MB",
+            subject: "Technical",
+            size: "15 MB",
+            company: "TCS",
             icon: FileText,
             color: "bg-red-500/20 text-red-300",
-            link: "#"
+            link: "/tcs_questions.pdf"
         },
         {
             id: 2,
-            title: "System Design Interview Guide",
-            type: "Video",
-            subject: "System Design",
-            duration: "45:20",
-            icon: PlayCircle,
+            title: "Infosys Power Programmer Guide",
+            type: "PDF",
+            subject: "Coding",
+            readTime: "10 min read",
+            company: "Infosys",
+            icon: FileText,
             color: "bg-blue-500/20 text-blue-300",
             link: "#"
         },
         {
             id: 3,
-            title: "Top 50 Java Interview Questions",
-            type: "Article",
-            subject: "Java",
-            readTime: "15 min read",
-            icon: LinkIcon,
+            title: "IBM Cognitive Ability Test",
+            type: "Video",
+            subject: "Aptitude",
+            duration: "45 mins",
+            company: "IBM",
+            icon: PlayCircle,
             color: "bg-green-500/20 text-green-300",
             link: "#"
         },
         {
             id: 4,
-            title: "React.js Complete Handbook",
-            type: "PDF",
-            subject: "Web Dev",
-            size: "5.1 MB",
-            icon: FileText,
+            title: "Google System Design",
+            type: "Video",
+            subject: "Technical",
+            size: "5 MB",
+            company: "Google",
+            icon: PlayCircle,
             color: "bg-cyan-500/20 text-cyan-300",
             link: "#"
         },
         {
             id: 5,
-            title: "Operating Systems Crash Course",
-            type: "Video",
-            subject: "CS Fundamentals",
-            duration: "1:20:00",
-            icon: PlayCircle,
+            title: "Amazon Leadership Principles",
+            type: "Article",
+            subject: "HR",
+            readTime: "30 mins",
+            company: "Amazon",
+            icon: LinkIcon,
             color: "bg-purple-500/20 text-purple-300",
             link: "#"
         },
         {
             id: 6,
-            title: "Quantitative Aptitude Formulas",
+            title: "TCS Digital Coding Questions",
             type: "PDF",
-            subject: "Aptitude",
-            size: "1.2 MB",
+            subject: "Coding",
+            size: "12 MB",
+            company: "TCS",
             icon: FileText,
             color: "bg-orange-500/20 text-orange-300",
-            link: "#"
-        },
-        {
-            id: 7,
-            title: "DBMS Normalization Explained",
-            type: "Article",
-            subject: "DBMS",
-            readTime: "10 min read",
-            icon: LinkIcon,
-            color: "bg-yellow-500/20 text-yellow-300",
-            link: "#"
-        },
-        {
-            id: 8,
-            title: "Mock Interview Recording - Google",
-            type: "Video",
-            subject: "Interview Prep",
-            duration: "55:00",
-            icon: PlayCircle,
-            color: "bg-pink-500/20 text-pink-300",
             link: "#"
         }
     ];
 
     const filteredMaterials = materials.filter(item => {
-        const matchesType = selectedType === 'All' || item.type === selectedType;
+        const matchesType = selectedType === 'All' || item.company === selectedType;
         const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             item.subject.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesType && matchesSearch;
@@ -162,7 +148,7 @@ const PrepMaterials = () => {
                                         <item.icon className="w-6 h-6" />
                                     </div>
                                     <span className="px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-white/5 text-secondary border border-white/5">
-                                        {item.type}
+                                        {item.company}
                                     </span>
                                 </div>
 
