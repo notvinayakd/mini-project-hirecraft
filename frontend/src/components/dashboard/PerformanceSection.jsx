@@ -128,7 +128,5 @@ const PerformanceSection = ({ stats, graphData }) => {
     );
 };
 
-// Quick fix for missing import
-import { FileText } from 'lucide-react';
 
 export default PerformanceSection;
