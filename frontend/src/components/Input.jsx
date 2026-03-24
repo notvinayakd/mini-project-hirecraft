@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-const Input = ({ label, type = "text", id, error, ...props }) => {
+const Input = ({ label, type = "text", id, error, onChange, onBlur, ...props }) => {
     const [isFocused, setIsFocused] = useState(false);
     const [hasValue, setHasValue] = useState(false);
+
+    const handleChange = (e) => {
+        setHasValue(e.target.value.length > 0);
+        if (onChange) onChange(e);
+    };
 
     const handleBlur = (e) => {
         setIsFocused(false);
         setHasValue(e.target.value.length > 0);
-        if (props.onBlur) props.onBlur(e);
+        if (onBlur) onBlur(e);
     };
 
     return (
@@ -35,7 +40,7 @@ const Input = ({ label, type = "text", id, error, ...props }) => {
         `}
                 onFocus={() => setIsFocused(true)}
                 onBlur={handleBlur}
-                onChange={(e) => setHasValue(e.target.value.length > 0)}
+                onChange={handleChange}
                 {...props}
             />
             {error && (

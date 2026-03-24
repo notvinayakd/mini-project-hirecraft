@@ -1,21 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import PerformanceSection from '../components/dashboard/PerformanceSection';
 import MockTestProgress from '../components/dashboard/MockTestProgress';
 import UpcomingEvents from '../components/dashboard/UpcomingEvents';
-import { Bell, Search, UserCircle, LogOut, Code } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Bell, Search, UserCircle } from 'lucide-react';
 
 const StudentDashboard = () => {
-    const [dashboardData, setDashboardData] = React.useState(null);
-    const [loading, setLoading] = React.useState(true);
-    const [error, setError] = React.useState(null);
+    const [dashboardData, setDashboardData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchDashboardData = async () => {
             try {
-                // In production, use environment variable for API URL
                 const response = await fetch('http://localhost:5000/api/student/dashboard', { credentials: 'include' });
 
                 if (response.status === 401) {
@@ -74,7 +72,7 @@ const StudentDashboard = () => {
 
             {/* Main Content Area */}
             <div className="flex-1 lg:ml-64 p-6 md:p-10 relative">
-                {/* Background Ambience tailored for Dashboard */}
+                {/* Background Ambience */}
                 <div className="fixed inset-0 pointer-events-none z-0">
                     <div className="absolute top-[-20%] left-[20%] w-[30%] h-[30%] bg-accent/5 rounded-full blur-[100px] mix-blend-screen" />
                     <div className="absolute bottom-[-20%] right-[10%] w-[25%] h-[25%] bg-blue-500/5 rounded-full blur-[100px] mix-blend-screen" />

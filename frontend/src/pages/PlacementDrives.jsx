@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { motion } from 'framer-motion';
 import { Search, MapPin, Calendar, Building2, Briefcase, DollarSign, Filter, ExternalLink } from 'lucide-react';
@@ -8,7 +8,7 @@ const PlacementDrives = () => {
     const [drives, setDrives] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    React.useEffect(() => {
+    useEffect(() => {
         fetchDrives();
     }, []);
 

@@ -4,7 +4,7 @@ import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid
 } from 'recharts';
 import StatsCard from './StatsCard';
-import { Target, Trophy, FileBarChart, Activity, FileText } from 'lucide-react';
+import { Trophy, Activity, FileText } from 'lucide-react';
 
 const PerformanceSection = ({ stats, graphData }) => {
     // Fallback data to prevent crashes if data is missing

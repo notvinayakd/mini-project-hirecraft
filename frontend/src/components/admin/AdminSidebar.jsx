@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
     LayoutDashboard,
     Code,
@@ -10,27 +10,14 @@ import {
     FileText,
     Bookmark
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useAuth } from '../../context/AuthContext';
 
 const AdminSidebar = () => {
-    const navigate = useNavigate();
-
-    const handleLogout = async () => {
-        try {
-            await fetch('http://localhost:5000/api/auth/logout', {
-                method: 'POST',
-                credentials: 'include'
-            });
-            navigate('/login');
-        } catch (error) {
-            console.error('Logout failed:', error);
-            navigate('/login');
-        }
-    };
+    const { logout } = useAuth();
 
     const navItems = [
         { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/dashboard' },
-        { icon: Code, label: 'Code Practice', path: '/admin/code-practice' }, // Updated label, path, and icon
+        { icon: Code, label: 'Code Practice', path: '/admin/code-practice' },
         { icon: FileText, label: 'Mock Tests', path: '/admin/tests' },
         { icon: Briefcase, label: 'Placement Drives', path: '/admin/drives' },
         { icon: Bookmark, label: 'Prep Materials', path: '/admin/materials' },
@@ -40,7 +27,6 @@ const AdminSidebar = () => {
 
     return (
         <>
-            {/* Desktop Sidebar */}
             <aside className="hidden lg:flex flex-col w-64 h-screen fixed left-0 top-0 bg-[#0f172a] border-r border-white/10 z-50">
                 <div className="p-6">
                     <div className="flex items-center px-2">
@@ -65,8 +51,6 @@ const AdminSidebar = () => {
                         >
                             <item.icon className="w-5 h-5 relative z-10" />
                             <span className="font-medium relative z-10">{item.label}</span>
-
-                            {/* Active/Hover Glint Effect - reused from main sidebar but maybe different color */}
                             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/10 to-orange-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
                         </NavLink>
                     ))}
@@ -74,7 +58,7 @@ const AdminSidebar = () => {
 
                 <div className="p-4 border-t border-white/10">
                     <button
-                        onClick={handleLogout}
+                        onClick={logout}
                         className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-red-400 hover:text-white hover:bg-red-500/10 transition-all duration-300 group"
                     >
                         <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />

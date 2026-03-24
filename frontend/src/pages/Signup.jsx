@@ -40,7 +40,6 @@ const Signup = () => {
                 throw new Error(data.error || 'Signup failed');
             }
 
-            // Redirect to login or dashboard on success
             navigate('/login');
         } catch (err) {
             setError(err.message);
