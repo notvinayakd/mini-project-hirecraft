@@ -21,11 +21,8 @@ export const AuthProvider = ({ children }) => {
                 const data = await response.json();
                 if (data.authenticated) {
                     setUser(data.user);
-                } else {
-                    setUser(null);
                 }
             } else if (response.status === 401) {
-                setUser(null);
             }
         } catch (error) {
             console.error("Auth check failed:", error);

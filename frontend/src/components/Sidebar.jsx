@@ -1,19 +1,19 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
     LayoutDashboard,
     FileText,
     Briefcase,
     BookOpen,
-    Building2,
     User,
     LogOut,
     Code
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
 
 const Sidebar = () => {
-    const navigate = useNavigate();
+    const { logout } = useAuth();
+
     const navItems = [
         { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
         { icon: FileText, label: 'Mock Tests', path: '/mock-tests' },
@@ -21,20 +21,6 @@ const Sidebar = () => {
         { icon: BookOpen, label: 'Prep Materials', path: '/materials' },
         { icon: Code, label: 'Code Practice', path: '/code-practice' },
     ];
-
-    const handleLogout = async () => {
-        try {
-            await fetch('http://localhost:5000/api/auth/logout', {
-                method: 'POST',
-                credentials: 'include'
-            });
-            navigate('/login');
-        } catch (error) {
-            console.error('Logout failed:', error);
-            // Even if API fails, clear session on client and redirect
-            navigate('/login');
-        }
-    };
 
     return (
         <aside className="fixed left-0 top-0 h-screen w-64 bg-background/50 backdrop-blur-xl border-r border-white/5 flex flex-col z-40 hidden lg:flex">
@@ -58,7 +44,6 @@ const Sidebar = () => {
                     >
                         <item.icon className="w-5 h-5" />
                         <span className="font-medium text-sm">{item.label}</span>
-                        {/* Hover glow effect */}
                         <div className="absolute inset-0 rounded-xl bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                     </NavLink>
                 ))}
@@ -66,7 +51,7 @@ const Sidebar = () => {
 
             <div className="p-4 border-t border-white/5">
                 <button
-                    onClick={handleLogout}
+                    onClick={logout}
                     className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-secondary hover:text-red-400 hover:bg-red-500/10 transition-colors group"
                 >
                     <LogOut className="w-5 h-5" />

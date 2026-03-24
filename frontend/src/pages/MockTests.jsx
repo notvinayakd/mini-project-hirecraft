@@ -32,14 +32,8 @@ const MockTests = () => {
                 throw new Error('Failed to fetch tests');
             }
             const data = await response.json();
-            // Backend now returns { tests: [], user_attempts: [] }
-            // Check if data is array (old format) or object (new format)
-            if (Array.isArray(data)) {
-                setTests(data);
-            } else {
-                setTests(data.tests || []);
-                setUserAttempts(data.user_attempts || []);
-            }
+            setTests(data.tests || []);
+            setUserAttempts(data.user_attempts || []);
         } catch (err) {
             console.error(err);
             setError('Failed to load mock tests. Please check your connection.');

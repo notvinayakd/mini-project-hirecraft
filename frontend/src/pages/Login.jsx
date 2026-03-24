@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import AuthCard from '../components/AuthCard';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -28,11 +28,8 @@ const Login = () => {
             const data = await response.json();
 
             if (response.ok) {
-                // Login successful
-                console.log('Login successful:', data);
                 login(data.user);
             } else {
-                // Login failed
                 setError(data.error || 'Login failed');
             }
         } catch (err) {

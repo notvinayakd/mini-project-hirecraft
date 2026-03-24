@@ -4,3 +4,4 @@ flask-sqlalchemy
 pymysql
 bcrypt
 python-dotenv
+gunicorn
