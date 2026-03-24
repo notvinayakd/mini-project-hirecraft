@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 import AuthCard from '../components/AuthCard';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -8,7 +9,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,6 +22,7 @@ const Login = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
+                credentials: 'include', // Important for cookies
             });
 
             const data = await response.json();
@@ -28,9 +30,7 @@ const Login = () => {
             if (response.ok) {
                 // Login successful
                 console.log('Login successful:', data);
-                // You might want to store the user data or token here
-                // localStorage.setItem('user', JSON.stringify(data.user)); // Example
-                navigate('/dashboard');
+                login(data.user);
             } else {
                 // Login failed
                 setError(data.error || 'Login failed');
