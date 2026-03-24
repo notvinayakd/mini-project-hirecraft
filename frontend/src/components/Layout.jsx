@@ -1,13 +1,17 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Outlet } from 'react-router-dom';
 
-const Layout = ({ children }) => {
+const Layout = () => {
     const location = useLocation();
     const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
-    const dashboardRoutes = ['/dashboard', '/drives', '/mock-tests', '/materials', '/profile'];
-    const shouldHideNav = isAuthPage || dashboardRoutes.includes(location.pathname);
+    const dashboardRoutes = ['/dashboard', '/drives', '/mock-tests', '/materials', '/profile', '/code-practice'];
+
+    // Hide nav for auth pages, dashboard pages (which have sidebar), and test interface
+    const shouldHideNav = isAuthPage ||
+        dashboardRoutes.includes(location.pathname) ||
+        location.pathname.startsWith('/student/test/');
 
     return (
         <div className="min-h-screen flex flex-col relative bg-background overflow-x-hidden selection:bg-accent/20">
@@ -20,7 +24,7 @@ const Layout = ({ children }) => {
             {!shouldHideNav && <Header />}
 
             <main className="flex-grow z-10 flex flex-col">
-                {children}
+                <Outlet />
             </main>
 
             {!shouldHideNav && <Footer />}
