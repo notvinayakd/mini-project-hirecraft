@@ -6,7 +6,7 @@ const UpcomingEvents = ({ events = [] }) => {
     return (
         <section className="bg-glass p-6 rounded-2xl border border-white/5 h-full">
             <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-heading font-semibold text-white">Upcoming Events</h2>
+                <h2 className="text-xl font-heading font-semibold text-white">Upcoming Events and Drives</h2>
                 <Link to="/drives" className="text-xs text-accent hover:text-white transition-colors">View All</Link>
             </div>
 

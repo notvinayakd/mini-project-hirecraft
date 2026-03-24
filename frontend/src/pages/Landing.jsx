@@ -46,7 +46,7 @@ const HeroSection = () => {
                     initial={{ opacity: 0, y: 100 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                    className="text-7xl md:text-9xl font-bold font-heading tracking-tighter leading-[0.9] mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/40"
+                    className="text-7xl md:text-[10rem] font-bold font-heading tracking-tighter leading-[0.85] mb-8 bg-clip-text text-transparent bg-gradient-to-br from-white via-white/90 to-accent/50 selection:text-white"
                 >
                     Skill issue? <br /> we got <br /> you
                 </motion.h1>
@@ -55,9 +55,9 @@ const HeroSection = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.5 }}
-                    className="text-xl md:text-2xl text-secondary max-w-xl mx-auto mb-10 font-light"
+                    className="text-xl md:text-3xl text-secondary max-w-2xl mx-auto mb-10 font-light tracking-tight"
                 >
-                    Building you from root to apex
+                    The definitive path to <span className="text-white font-medium">engineering excellence.</span>
                 </motion.p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

@@ -46,13 +46,6 @@ const PerformanceSection = ({ stats, graphData }) => {
                     icon={Trophy}
                     delay={0.3}
                 />
-                <StatsCard
-                    title="Current Rank"
-                    value={`#${stats?.rank || '-'}`}
-                    subtext="Among all students"
-                    icon={Target}
-                    delay={0.4}
-                />
             </div>
 
             {/* Graphs Grid */}

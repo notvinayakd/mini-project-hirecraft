@@ -1,99 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { motion } from 'framer-motion';
-import { Search, Filter, FileText, Video, Link as LinkIcon, Download, ExternalLink, PlayCircle, Book } from 'lucide-react';
+import { Search, Filter, FileText, Video, Link as LinkIcon, Download, ExternalLink, PlayCircle, Book, Github, Layout } from 'lucide-react';
 
 const PrepMaterials = () => {
+    const [materials, setMaterials] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [selectedType, setSelectedType] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
 
-    const types = ['All', 'PDF', 'Video', 'Article'];
+    const types = ['All', ...new Set(materials.map(m => m.company).filter(c => c && c.toLowerCase() !== 'all'))];
 
-    const materials = [
-        {
-            id: 1,
-            title: "Data Structures & Algorithms Cheat Sheet",
-            type: "PDF",
-            subject: "DSA",
-            size: "2.4 MB",
-            icon: FileText,
-            color: "bg-red-500/20 text-red-300",
-            link: "#"
-        },
-        {
-            id: 2,
-            title: "System Design Interview Guide",
-            type: "Video",
-            subject: "System Design",
-            duration: "45:20",
-            icon: PlayCircle,
-            color: "bg-blue-500/20 text-blue-300",
-            link: "#"
-        },
-        {
-            id: 3,
-            title: "Top 50 Java Interview Questions",
-            type: "Article",
-            subject: "Java",
-            readTime: "15 min read",
-            icon: LinkIcon,
-            color: "bg-green-500/20 text-green-300",
-            link: "#"
-        },
-        {
-            id: 4,
-            title: "React.js Complete Handbook",
-            type: "PDF",
-            subject: "Web Dev",
-            size: "5.1 MB",
-            icon: FileText,
-            color: "bg-cyan-500/20 text-cyan-300",
-            link: "#"
-        },
-        {
-            id: 5,
-            title: "Operating Systems Crash Course",
-            type: "Video",
-            subject: "CS Fundamentals",
-            duration: "1:20:00",
-            icon: PlayCircle,
-            color: "bg-purple-500/20 text-purple-300",
-            link: "#"
-        },
-        {
-            id: 6,
-            title: "Quantitative Aptitude Formulas",
-            type: "PDF",
-            subject: "Aptitude",
-            size: "1.2 MB",
-            icon: FileText,
-            color: "bg-orange-500/20 text-orange-300",
-            link: "#"
-        },
-        {
-            id: 7,
-            title: "DBMS Normalization Explained",
-            type: "Article",
-            subject: "DBMS",
-            readTime: "10 min read",
-            icon: LinkIcon,
-            color: "bg-yellow-500/20 text-yellow-300",
-            link: "#"
-        },
-        {
-            id: 8,
-            title: "Mock Interview Recording - Google",
-            type: "Video",
-            subject: "Interview Prep",
-            duration: "55:00",
-            icon: PlayCircle,
-            color: "bg-pink-500/20 text-pink-300",
-            link: "#"
+    useEffect(() => {
+        fetchMaterials();
+    }, []);
+
+    const fetchMaterials = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/api/student/prep/materials', {
+                credentials: 'include'
+            });
+            if (!response.ok) throw new Error('Failed to fetch materials');
+            const data = await response.json();
+            setMaterials(data);
+        } catch (err) {
+            console.error(err);
+            setError('Failed to load materials.');
+        } finally {
+            setLoading(false);
         }
-    ];
+    };
+
+    const getIcon = (type) => {
+        switch (type) {
+            case 'PDF': return FileText;
+            case 'Video': return PlayCircle;
+            case 'Article': return LinkIcon;
+            case 'Repo': return Github;
+            case 'Practice': return Layout;
+            case 'Sheet': return FileText;
+            case 'Course': return Book;
+            default: return LinkIcon;
+        }
+    };
+
+    const getColor = (company) => {
+        switch (company) {
+            case 'TCS': return "bg-red-500/20 text-red-300";
+            case 'Infosys': return "bg-blue-500/20 text-blue-300";
+            case 'IBM': return "bg-green-500/20 text-green-300";
+            case 'Google': return "bg-cyan-500/20 text-cyan-300";
+            case 'Amazon': return "bg-purple-500/20 text-purple-300";
+            default: return "bg-orange-500/20 text-orange-300";
+        }
+    };
 
     const filteredMaterials = materials.filter(item => {
-        const matchesType = selectedType === 'All' || item.type === selectedType;
+        const matchesType = selectedType === 'All' || item.company === selectedType;
         const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             item.subject.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesType && matchesSearch;
@@ -150,39 +114,48 @@ const PrepMaterials = () => {
 
                     {/* Materials Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-                        {filteredMaterials.map((item) => (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                key={item.id}
-                                className="group bg-glass rounded-2xl p-5 border border-white/5 hover:border-accent/20 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 hover:-translate-y-1 flex flex-col"
-                            >
-                                <div className="flex justify-between items-start mb-4">
-                                    <div className={`w-12 h-12 rounded-xl ${item.color} flex items-center justify-center`}>
-                                        <item.icon className="w-6 h-6" />
+                        {filteredMaterials.map((item) => {
+                            const Icon = getIcon(item.type);
+                            const colorClass = getColor(item.company);
+
+                            return (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    key={item.id}
+                                    className="group bg-glass rounded-2xl p-5 border border-white/5 hover:border-accent/20 transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 hover:-translate-y-1 flex flex-col"
+                                >
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div className={`w-12 h-12 rounded-xl ${colorClass} flex items-center justify-center`}>
+                                            <Icon className="w-6 h-6" />
+                                        </div>
+                                        <span className="px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-white/5 text-secondary border border-white/5">
+                                            {item.company}
+                                        </span>
                                     </div>
-                                    <span className="px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-white/5 text-secondary border border-white/5">
-                                        {item.type}
-                                    </span>
-                                </div>
 
-                                <div className="flex-1">
-                                    <h3 className="text-lg font-bold text-white mb-1 line-clamp-2 group-hover:text-accent transition-colors">
-                                        {item.title}
-                                    </h3>
-                                    <p className="text-sm text-secondary mb-4">{item.subject}</p>
-                                </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-lg font-bold text-white mb-1 line-clamp-2 group-hover:text-accent transition-colors">
+                                            {item.title}
+                                        </h3>
+                                    </div>
 
-                                <div className="flex items-center justify-between pt-4 border-t border-white/5 mt-2">
-                                    <span className="text-xs text-secondary font-medium">
-                                        {item.size || item.duration || item.readTime}
-                                    </span>
-                                    <button className="p-2 rounded-lg hover:bg-white/10 text-secondary hover:text-accent transition-colors">
-                                        {item.type === 'PDF' ? <Download className="w-4 h-4" /> : <ExternalLink className="w-4 h-4" />}
-                                    </button>
-                                </div>
-                            </motion.div>
-                        ))}
+                                    <div className="flex items-center justify-between pt-4 border-t border-white/5 mt-2">
+                                        <span className="text-xs text-secondary font-medium">
+                                            {item.meta}
+                                        </span>
+                                        <a
+                                            href={item.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="p-2 rounded-lg hover:bg-white/10 text-secondary hover:text-accent transition-colors"
+                                        >
+                                            {item.type === 'PDF' ? <Download className="w-4 h-4" /> : <ExternalLink className="w-4 h-4" />}
+                                        </a>
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
                     </div>
 
                     {filteredMaterials.length === 0 && (
