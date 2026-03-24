@@ -4,9 +4,7 @@ import Sidebar from '../components/Sidebar';
 import PerformanceSection from '../components/dashboard/PerformanceSection';
 import MockTestProgress from '../components/dashboard/MockTestProgress';
 import UpcomingEvents from '../components/dashboard/UpcomingEvents';
-import InterestedCompanies from '../components/dashboard/InterestedCompanies';
-import PreparationMaterials from '../components/dashboard/PreparationMaterials';
-import { Bell, Search, UserCircle } from 'lucide-react';
+import { Bell, Search, UserCircle, LogOut, Code } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const StudentDashboard = () => {
@@ -18,7 +16,14 @@ const StudentDashboard = () => {
         const fetchDashboardData = async () => {
             try {
                 // In production, use environment variable for API URL
-                const response = await fetch('http://127.0.0.1:5000/api/student/dashboard');
+                const response = await fetch('http://localhost:5000/api/student/dashboard', { credentials: 'include' });
+
+                if (response.status === 401) {
+                    // Redirect to login if unauthorized
+                    window.location.href = '/login';
+                    return;
+                }
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch dashboard data');
                 }
@@ -60,7 +65,7 @@ const StudentDashboard = () => {
         );
     }
 
-    const { profile, stats, graphs, recentAttempts, events, materials } = dashboardData;
+    const { profile, stats, graphs, recentAttempts, events } = dashboardData;
 
     return (
         <div className="flex min-h-screen bg-background text-white font-sans selection:bg-accent/20">
@@ -121,25 +126,12 @@ const StudentDashboard = () => {
                         <div className="lg:col-span-2">
                             <div className="space-y-6">
                                 <MockTestProgress recentAttempts={recentAttempts} />
-                                {/* InterestedCompanies removed as per previous task, or checking if needed. 
-                                    Routes/Task says it was deleted from sidebar, but component import exists.
-                                    We should likely remove it or leave it if it's just 'deleted from sidebar' but user might want it here.
-                                    Task 5 said "Delete Interested Companies from Sidebar".
-                                    User said "replace all the dummy data". 
-                                    I will toggle/comment it out for now as it wasn't explicitly in the plan to remove from dash, 
-                                    but it relies on dummy data. Plan didn't mention updating it. 
-                                    I'll remove it to be safe/clean as requested to "replace dummy data".
-                                */}
-                                {/* <InterestedCompanies /> */}
                             </div>
                         </div>
                         <div className="lg:col-span-1">
                             <UpcomingEvents events={events} />
                         </div>
                     </div>
-
-                    {/* Bottom Section: Prep Materials */}
-                    <PreparationMaterials materialCounts={materials} />
 
                     <footer className="text-center text-secondary/50 text-xs py-8">
                         &copy; 2026 HireCraft. All rights reserved.
